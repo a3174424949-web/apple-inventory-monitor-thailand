@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Apple 泰国库存本机桥接",
+  "version": "1.5.0",
+  "description": "将 Apple 页面自身产生的库存响应与本机轮询结果发送到库存看板。",
+  "host_permissions": [
+    "https://www.apple.com/th/*",
+    "http://127.0.0.1:4318/*"
+  ],
+  "permissions": ["alarms"],
+  "background": {"service_worker": "background.js"},
+  "content_scripts": [
+    {
+        "matches": ["https://www.apple.com/th/*"],
+      "js": ["interceptor.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+        "matches": ["https://www.apple.com/th/*"],
+      "js": ["relay.js"],
+      "run_at": "document_start",
+      "world": "ISOLATED"
+    }
+  ],
+  "action": {"default_title": "Apple 泰国库存本机桥接"}
+}

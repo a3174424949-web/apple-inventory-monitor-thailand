@@ -1,0 +1,28 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-store"><title>iPhone 18 库存看板</title><link rel="stylesheet" href="/style.css?v=2.1.0"><script src="/app.js?v=2.1.0" defer></script></head>
+<body><header><div><p class="eyebrow">APPLE STORE · 泰国直营店</p><h1>Apple库存监控-泰国两店</h1></div><span id="connection">正在连接</span></header>
+<main>
+ <form id="config-form" class="config collapsed" novalidate>
+  <div class="section-title">
+   <div><p class="eyebrow">监听范围</p><h2>选择门店与型号</h2><p class="config-summary" id="config-summary"></p></div>
+   <div class="config-actions"><button type="button" class="ghost" id="config-toggle" aria-expanded="false" aria-controls="config-fields">修改</button><button class="primary" id="save-config" type="submit">保存并监听</button></div>
+  </div>
+  <div class="selectors" id="config-fields">
+   <label class="selector"><span>地区</span><select id="province-select" aria-label="地区"></select></label>
+   <label class="selector"><span>查询间隔</span><select id="interval-select" aria-label="查询间隔"><option value="120">120 秒（推荐）</option><option value="180">180 秒</option><option value="300">300 秒</option><option value="600">600 秒</option><option value="900">900 秒</option></select></label>
+   <fieldset><legend>门店（可多选，默认两家）</legend><div id="store-options" class="checks" aria-label="门店"></div><small id="store-summary"></small></fieldset>
+   <fieldset><legend>型号</legend><div class="field-tools"><button type="button" data-target="model-options" data-mode="all">全选</button><button type="button" data-target="model-options" data-mode="none">清空</button></div><div id="model-options" class="checks" aria-label="型号"></div></fieldset>
+   <fieldset><legend>容量</legend><div class="field-tools"><button type="button" data-target="capacity-options" data-mode="all">全选</button><button type="button" data-target="capacity-options" data-mode="none">清空</button></div><div id="capacity-options" class="checks" aria-label="容量"></div></fieldset>
+   <fieldset><legend>颜色</legend><div class="field-tools"><button type="button" data-target="color-options" data-mode="all">全选</button><button type="button" data-target="color-options" data-mode="none">清空</button></div><div id="color-options" class="checks" aria-label="颜色"></div></fieldset>
+  </div>
+  <p id="config-error" role="alert" hidden></p>
+ </form>
+ <section class="hero"><div><span class="store" id="selected-store">正在读取当前门店</span><h2 id="state-title">等待日常 Chrome</h2><p id="state-message" role="status">在 Chrome 中打开泰国 Apple 商品页，库存会自动同步。</p></div><div class="freshness"><span>最后更新</span><strong id="freshness-time">尚无数据</strong><small id="freshness-note">约 120 秒一轮</small></div></section>
+ <p id="error" role="alert" hidden></p>
+ <div class="toolbar">
+  <nav class="filters" aria-label="库存筛选"><button type="button" class="selected" data-filter="all">全部 <span id="count-all">0</span></button><button type="button" data-filter="available">可取货 <span id="count-available">0</span></button><button type="button" data-filter="unavailable">暂无供应 <span id="count-unavailable">0</span></button><button type="button" data-filter="unknown">未知 <span id="count-unknown">0</span></button><button type="button" data-filter="stale">已过期 <span id="count-stale">0</span></button></nav>
+  <div class="grouping" role="group" aria-label="分组方式"><button type="button" class="selected" data-group="model">按机型</button><button type="button" data-group="store">按门店</button><button type="button" data-group="sku">按 SKU 对比</button></div>
+ </div>
+ <section id="catalog" aria-live="polite"></section>
+ <section class="logs"><div class="section-title"><h2>运行记录</h2><span>最近 120 条</span></div><div id="log-list"><p class="empty">任务开始后，检查结果会显示在这里。</p></div></section>
+ <p class="notice">监控不等于预留库存，也不会自动加购或下单。网站验证需要本人在 Chrome 中正常完成。</p>
+</main></body></html>

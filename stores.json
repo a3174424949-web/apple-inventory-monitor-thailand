@@ -1,0 +1,23 @@
+{
+  "source": "https://www.apple.com/th/retail/storelist/",
+  "checkedAt": "2026-10-02",
+  "country": "Thailand",
+  "stores": [
+    {
+      "id": "R733",
+      "name": "Central World",
+      "province": "Bangkok",
+      "city": "Bangkok",
+      "location": "Bangkok Pathum Wan",
+      "url": "https://www.apple.com/th/retail/centralworld/"
+    },
+    {
+      "id": "R728",
+      "name": "Iconsiam",
+      "province": "Bangkok",
+      "city": "Bangkok",
+      "location": "Bangkok Khlong San",
+      "url": "https://www.apple.com/th/retail/iconsiam/"
+    }
+  ]
+}

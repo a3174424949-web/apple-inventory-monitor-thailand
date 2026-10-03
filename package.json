@@ -1,0 +1,1 @@
+{"name":"apple-inventory-monitor-thailand","private":true,"type":"module","scripts":{"test":"node --test cloud/monitor.test.mjs","start":"node server.mjs","ui":"node server.mjs","cli":"node apple.mjs","cloud":"node cloud/server.mjs"},"dependencies":{"playwright":"^1.63.0"}}

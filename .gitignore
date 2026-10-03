@@ -1,0 +1,6 @@
+node_modules/
+.local/
+.workbuddy/
+.env
+*.log
+cloud/latest.json

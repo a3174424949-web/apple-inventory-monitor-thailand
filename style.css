@@ -1,0 +1,118 @@
+:root{
+  color-scheme:light;
+  --bg:#f4f5f7;--surface:#fff;--ink:#18232d;--muted:#66727c;--line:#dde2e6;
+  --blue:#0677e8;--blue-deep:#045db4;--green:#14783f;--green-soft:#f1faf4;
+  --red:#a23a35;--amber:#93620c;--radius:16px;
+  font-family:"Segoe UI","Microsoft YaHei",sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink)}
+button{font:inherit;cursor:pointer;border:1px solid var(--line);border-radius:9px;background:white;padding:10px 14px;color:inherit}
+button:focus-visible{outline:3px solid #78b7f5;outline-offset:2px}
+button:disabled{opacity:.42;cursor:not-allowed}
+header,main{max-width:1240px;margin:auto}
+header{padding:28px 24px 20px;display:flex;justify-content:space-between;align-items:end;gap:16px}
+h1{font-size:28px;margin:3px 0}
+.eyebrow{font-size:11px;letter-spacing:1.8px;color:var(--muted);margin:0}
+#connection{font-size:12px;color:var(--muted);white-space:nowrap}
+#connection:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#888;margin-right:7px}
+.online:before{background:var(--green)!important}
+.offline{color:var(--red)!important}
+main{padding:0 24px 35px}
+.config,.hero,.family,.logs{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius)}
+
+/* 监听范围：已保存过配置就默认收起，把首屏让给库存结果；展开时才是完整的五个选择器 */
+.config{padding:20px;margin-bottom:16px}
+.config h2{margin:4px 0 0}
+.config-summary{color:var(--muted);font-size:12.5px;margin:8px 0 0}
+.config-actions{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.config.collapsed .selectors{display:none}
+.ghost{background:transparent;color:var(--muted)}
+.ghost:hover{color:var(--ink)}
+.primary{background:var(--blue);color:white;border-color:var(--blue)}
+/* 有未保存改动时按钮转为深蓝并加光晕，避免"以为改了其实没保存" */
+#save-config.dirty{background:var(--blue-deep);border-color:var(--blue-deep);box-shadow:0 0 0 3px #bcdcfb}
+.selectors{display:grid;grid-template-columns:180px repeat(4,1fr);gap:12px;margin-top:16px}
+.selector,fieldset{position:relative;min-width:0;border:1px solid var(--line);border-radius:10px;padding:12px;margin:0}
+.selector>span,legend{font-weight:700;font-size:12px}
+.selector select{width:100%;margin-top:8px;border:1px solid var(--line);border-radius:7px;padding:5px;background:white}
+.selector small,fieldset small{display:block;color:var(--muted);margin-top:5px;font-size:12px;line-height:1.5}
+.field-tools{position:absolute;top:-6px;right:10px;display:flex;gap:8px}
+.field-tools button{border:0;background:none;padding:0;font-size:11px;color:var(--blue)}
+.field-tools button:hover{color:var(--blue-deep);text-decoration:underline}
+.checks{display:grid;gap:7px;max-height:150px;overflow:auto;margin-top:6px}
+.checks label{display:flex;align-items:center;gap:7px;font-size:12.5px}
+.checks input{accent-color:var(--blue);flex-shrink:0}
+.swatch{width:12px;height:12px;border-radius:50%;border:1px solid rgba(0,0,0,.18);flex-shrink:0}
+#config-error{color:var(--red);margin:12px 0 0}
+
+/* 当前状态：左侧是门店与阶段，右侧是"数据多新"—— 打开页面最想确认的两件事 */
+.hero{padding:20px 24px;display:flex;justify-content:space-between;gap:20px;align-items:center;flex-wrap:wrap}
+.store{font-size:12px;color:var(--blue);font-weight:700}
+.hero h2{margin:8px 0 4px}
+.hero p{color:var(--muted);margin:0}
+.freshness{text-align:right;flex-shrink:0}
+.freshness span{display:block;font-size:11px;color:var(--muted)}
+.freshness strong{display:block;font-size:20px;font-variant-numeric:tabular-nums;margin:2px 0}
+.freshness small{display:block;font-size:11px;color:var(--muted)}
+#error{color:var(--red);background:#fff0ef;border:1px solid #efc4c1;padding:12px;border-radius:10px;margin:16px 0}
+
+/* 工具栏：左边筛状态，右边切分组方式 */
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:18px 0;flex-wrap:wrap}
+/* min-width:0 必须保留：否则 .toolbar 纵向布局时内容最小宽度会把这个滚动容器撑破 */
+.filters{display:flex;gap:8px;overflow:auto;min-width:0;padding-bottom:2px}
+.filters button{white-space:nowrap;padding:9px 13px;font-size:12.5px}
+.filters button.selected{background:var(--ink);color:white;border-color:var(--ink)}
+.filters span{opacity:.7;margin-left:5px}
+.grouping{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:white}
+.grouping button{border:0;border-radius:0;padding:9px 13px;font-size:12.5px;background:transparent}
+.grouping button+button{border-left:1px solid var(--line)}
+.grouping button.selected{background:var(--blue);color:white}
+
+/* 卡片：列宽自适应，选得少时卡片自然变宽，不留大片空白 */
+.family{padding:22px;margin-bottom:16px}
+.family>h2{font-size:18px;margin:0 0 14px}
+.family>p{color:var(--blue);font-size:12px;margin:-8px 0 14px}
+/* auto-fit（不是 auto-fill）：监控的配置通常不多，让已有卡片拉伸填满，避免右侧留大片空轨道 */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.card{border:1px solid var(--line);border-left:4px solid #98a2aa;border-radius:10px;padding:14px;min-width:0}
+/* 可取货是全页唯一的目的，给它最强的视觉权重；缺货保持中性，红色只留给真实异常 */
+.card.available{border-left-color:var(--green);background:var(--green-soft);box-shadow:inset 0 0 0 1px #cbe8d6}
+.card.unavailable{border-left-color:#b6bec6}
+.card.stale{border-left-color:var(--amber)}
+.card>div{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.card strong{font-size:14.5px}
+.card .badge{font-size:11.5px;color:var(--muted);white-space:nowrap}
+.card.available .badge{color:var(--green);font-weight:700}
+.card code{display:block;font-size:12px;color:var(--muted);margin:7px 0}
+.card p{font-size:13px;margin:8px 0;min-height:20px}
+.card small{color:var(--muted);font-size:11.5px}
+
+.logs{margin-top:18px;padding:20px}
+.section-title{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.section-title h2{font-size:16px;margin:0}
+.section-title span{font-size:11px;color:var(--muted)}
+#log-list{max-height:min(320px,40vh);overflow:auto;margin-top:12px}
+.log{display:grid;grid-template-columns:75px 1fr;gap:12px;padding:8px 0;border-top:1px solid var(--line);font-size:12.5px}
+.log time{color:var(--muted)}
+.empty,.notice{color:var(--muted);font-size:12px}
+.notice{text-align:center;margin:22px 0}
+*{scrollbar-color:#aeb8c1 #eef1f3;scrollbar-width:thin}
+
+@media(max-width:1100px){.selectors{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:900px){.selectors{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){
+  header,main{padding-left:14px;padding-right:14px}
+  header{flex-direction:column;align-items:flex-start;gap:6px}
+  .hero{flex-direction:column;align-items:stretch}
+  .freshness{text-align:left}
+  .selectors{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr}
+  .family{padding:16px}
+  .toolbar{align-items:stretch}
+  .filters,.grouping{flex:1 1 100%}
+  .grouping button{flex:1}
+  .config .section-title{flex-direction:column;align-items:stretch;gap:10px}
+  .config-actions{justify-content:space-between}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}

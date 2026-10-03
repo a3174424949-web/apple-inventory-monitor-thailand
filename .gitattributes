@@ -1,0 +1,10 @@
+# 统一使用 LF 行尾，避免 Windows 检出后把整文件变成 CRLF 而产生无意义的 diff，
+# 保证每次提交的变更范围真实可读（可溯源、可精准回退）。
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary

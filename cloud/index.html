@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Apple库存监控-泰国两店</title>
+  <style>
+    :root{font-family:Segoe UI,Microsoft YaHei,sans-serif;color:#172735;background:#f3f5f8}body{max-width:1100px;margin:0 auto;padding:28px}h1{margin:0 0 8px}p{color:#5c6b78}.meta{display:flex;gap:18px;flex-wrap:wrap;margin:20px 0}.pill{background:#fff;border:1px solid #dce3e9;border-radius:10px;padding:10px 14px}.ok{color:#087443}.bad{color:#a12622}.store{background:#fff;border:1px solid #dce3e9;border-radius:14px;margin:16px 0;padding:18px}.store h2{margin:0 0 8px}.row{display:grid;grid-template-columns:170px 130px 1fr;gap:8px;padding:8px 0;border-top:1px solid #edf0f2}.available{color:#087443;font-weight:700}.unavailable{color:#5c6b78}.unknown{color:#a12622}@media(max-width:700px){.row{grid-template-columns:1fr}.meta{display:block}.pill{margin:8px 0}}
+  </style>
+</head>
+<body>
+  <h1>Apple库存监控-泰国两店</h1>
+  <p>云端轮询 Apple Thailand 的 Central World 与 Iconsiam；监控只读库存，不加购、不下单。</p>
+  <div class="meta"><div class="pill">状态：<strong id="status">读取中</strong></div><div class="pill">当前间隔：<strong id="interval">—</strong></div><div class="pill">最近查询：<strong id="checked">—</strong></div><div class="pill">下次查询：<strong id="next">—</strong></div></div>
+  <main id="stores"></main>
+  <script>
+    const esc=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+    const time=value=>value?new Date(value).toLocaleString('zh-CN',{hour12:false}):'—';
+    async function refresh(){try{const s=await fetch('/api/state',{cache:'no-store'}).then(r=>r.json());const status=document.querySelector('#status');status.textContent=s.message||s.status;status.className=s.status==='ok'?'ok':'bad';document.querySelector('#interval').textContent=`${s.pollIntervalSeconds??'—'} 秒`;document.querySelector('#checked').textContent=time(s.checkedAt);document.querySelector('#next').textContent=time(s.nextCheckAt);const products=new Map((s.products||[]).map(p=>[p.partNumber||p.part,p]));const groups=new Map();for(const [key,item] of Object.entries(s.inventory||{})){const store=(s.stores||[]).find(row=>row.id===item.storeId),product=products.get(item.partNumber||key.split(':').slice(1).join(':'));if(!store||!product)continue;(groups.get(store.id)||groups.set(store.id,{store,items:[]}).get(store.id)).items.push({item,product});}document.querySelector('#stores').innerHTML=[...(groups.values())].map(group=>`<section class="store"><h2>${esc(group.store.name)}</h2><p>${esc(group.store.city)} · ${esc(group.store.location)}</p>${group.items.sort((a,b)=>a.product.model.localeCompare(b.product.model)||a.product.capacity.localeCompare(b.product.capacity)).map(({item,product})=>`<div class="row"><strong>${esc(product.modelName)} ${esc(product.capacity)} · ${esc(product.colorName)}</strong><span class="${esc(item.status)}">${item.status==='available'?'可取货':item.status==='unavailable'?'暂无供应':'未知'}</span><span>${esc(item.message)}<br><small>${time(item.checkedAt)} · ${esc(item.partNumber)}</small></span></div>`).join('')}</section>`).join('');}catch(error){document.querySelector('#status').textContent='页面暂时无法读取服务状态';}}
+    refresh();setInterval(refresh,30000);
+  </script>
+</body>
+</html>
